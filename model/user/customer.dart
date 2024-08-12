@@ -18,12 +18,6 @@ class Customer extends User {
       required super.password,
       required this.purchaseHistory}) {
     sequence++;
-    for (var customer in Admin.customerList) {
-      if (customer.id == id) {
-        return;
-      }
-    }
-    Admin.customerList.add(this);
   }
 
   factory Customer.fromJson(Map<String, dynamic> json) {
@@ -85,6 +79,8 @@ class Customer extends User {
         purchaseHistory: []);
     print(green('Registration Successful!!'));
     print(gold('Your ID is ${customer.id}'));
+    User.usersList.add(customer);
+    Admin.customerList.add(customer);
     updateUser(customer);
   }
 

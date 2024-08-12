@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 import '../model/book.dart';
-import '../model/user/customer.dart';
 import '../model/user/user.dart';
+import '../model/user/admin.dart';
 
 updateUser(User user, {Book? book}) async {
   File file = File('data/users.json');
@@ -13,9 +13,9 @@ updateUser(User user, {Book? book}) async {
     for (var customer in users['customer']) {
       if (customer['id'] == user.id) {
         (customer['books_bought'] as List).add(book.displayBookBought(book));
-        for (var object in User.usersList) {
+        for (var object in Admin.customerList) {
           if (object.id == customer['id']) {
-            (object as Customer).purchaseHistory.add(book);
+            object.purchaseHistory.add(book);
             break;
           }
         }
